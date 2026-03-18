@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy | StudyTurbo AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body class="privacy-body">
+    <main class="privacy-layout">
+      <a class="back-link" href="{{ url_for('index') }}">&larr; Tillbaka till StudyTurbo AI</a>
+      <section class="privacy-card">
+        <p class="eyebrow">Privacy Policy</p>
+        <h1>Integritetspolicy f&ouml;r StudyTurbo AI</h1>
+        <p>
+          Denna sida beskriver vilken data som hanteras i tj&auml;nsten, hur cookies anv&auml;nds och hur
+          annonsering fungerar i nuvarande version.
+        </p>
+
+        <div class="policy-grid">
+          <article>
+            <h2>Vilken data som samlas in</h2>
+            <p>
+              Text som du klistrar in skickas till det enkla Flask-API:t f&ouml;r bearbetning. I denna
+              demo sparas ingen text permanent p&aring; servern. Planval, cookie-samtycke och
+              anv&auml;ndningsr&auml;knare lagras i webbl&auml;sarens localStorage.
+            </p>
+          </article>
+
+          <article>
+            <h2>Cookies och annonser</h2>
+            <p>
+              Om du accepterar cookies kan annonselement f&ouml;r Google AdSense laddas. Koden anv&auml;nder
+              placeholder-v&auml;rden som enkelt kan bytas mot riktiga annons-ID:n senare. Om du avvisar
+              cookies laddas inga annonser.
+            </p>
+          </article>
+
+          <article>
+            <h2>Analys</h2>
+            <p>
+              I denna version anv&auml;nds ingen extern analysplattform, men cookie-bannern &auml;r
+              f&ouml;rberedd f&ouml;r att senare kunna styra analysverktyg om projektet byggs ut.
+            </p>
+          </article>
+
+          <article>
+            <h2>Kontakt</h2>
+            <p>
+              Kontaktperson: support@studyturbo-ai.example
+              <br />
+              F&ouml;retag: StudyTurbo AI AB (placeholder)
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudyTurbo AI | Smart study assistant</title>
+    <meta
+      name="description"
+      content="StudyTurbo AI hj&auml;lper dig att sammanfatta text, skapa quiz och bygga flashcards i ett modernt AI-gr&auml;nssnitt."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body data-free-limit="{{ free_daily_limit }}">
+    <div class="page-shell">
+      <!-- Main brand header -->
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark">S</div>
+          <div>
+            <p class="eyebrow">StudyTurbo AI</p>
+            <h1>F&ouml;rvandla text till studiematerial p&aring; sekunder</h1>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button class="ghost-button" id="planToggleButton" type="button">Aktivera Premium</button>
+        </div>
+      </header>
+
+      <!-- Ad banner shown only for free users who accept cookies -->
+      <section class="top-ad-section ad-slot hidden" id="topAdSlot" aria-label="Annonsutrymme">
+        <div class="ad-card">
+          <p class="ad-label">Annons</p>
+          <div class="adsense-placeholder">
+            <p>Google AdSense Banner</p>
+            <code>ca-pub-XXXXXXXXXXXX</code>
+            <ins
+              class="adsbygoogle"
+              style="display:block"
+              data-ad-client="ca-pub-XXXXXXXXXXXX"
+              data-ad-slot="1234567890"
+              data-ad-format="auto"
+              data-full-width-responsive="true"
+            ></ins>
+          </div>
+        </div>
+      </section>
+
+      <main class="content-grid">
+        <section class="hero-panel">
+          <div class="hero-copy">
+            <span class="pill">M&ouml;rkt AI-gr&auml;nssnitt</span>
+            <h2>En startup-k&auml;nsla som k&auml;nns f&auml;rdig fr&aring;n dag ett</h2>
+            <p>
+              Klistra in anteckningar, artiklar eller kursmaterial och v&auml;lj om du vill ha en
+              sammanfattning, quizfr&aring;gor eller flashcards. Allt visas i tydliga cards.
+            </p>
+          </div>
+
+          <!-- Fake plan card for freemium UX -->
+          <div class="plan-card">
+            <div class="plan-header">
+              <div>
+                <p class="eyebrow">Plan</p>
+                <h3 id="planName">Free</h3>
+              </div>
+              <span class="status-dot" id="planStatusDot"></span>
+            </div>
+            <p id="usageText">3 gratis anv&auml;ndningar per dag. Annonser visas efter cookie-samtycke.</p>
+            <div class="plan-comparison">
+              <div class="comparison-column">
+                <h4>Free</h4>
+                <ul>
+                  <li>3 k&ouml;rningar per dag</li>
+                  <li>Adsense-ytor</li>
+                  <li>Perfekt f&ouml;r att testa</li>
+                </ul>
+              </div>
+              <div class="comparison-column premium">
+                <h4>Premium</h4>
+                <ul>
+                  <li>Obegr&auml;nsad anv&auml;ndning</li>
+                  <li>Inga annonser</li>
+                  <li>Prioriterad framtida AI</li>
+                </ul>
+              </div>
+            </div>
+            <button class="primary-button full-width" id="upgradeButton" type="button">
+              Upgrade to Premium
+            </button>
+          </div>
+        </section>
+
+        <section class="workspace-panel">
+          <div class="input-card">
+            <label for="textInput">Din text</label>
+            <textarea
+              id="textInput"
+              placeholder="Klistra in text h&auml;r. StudyTurbo AI skapar direkt en sammanfattning, quiz eller flashcards."
+            ></textarea>
+
+            <!-- Study modes -->
+            <div class="action-row">
+              <button class="mode-button active" data-mode="summary" type="button">Sammanfatta</button>
+              <button class="mode-button" data-mode="quiz" type="button">Quiz</button>
+              <button class="mode-button" data-mode="flashcards" type="button">Flashcards</button>
+            </div>
+
+            <div class="submit-row">
+              <button class="primary-button" id="generateButton" type="button">Generera med AI</button>
+              <p class="helper-text">
+                Backend simulerar AI-svar nu, men kommenterad kod visar var OpenAI kan kopplas in senare.
+              </p>
+            </div>
+          </div>
+
+          <!-- Mid-page ad placeholder -->
+          <section class="middle-ad-section ad-slot hidden" id="middleAdSlot" aria-label="Annonsutrymme">
+            <div class="ad-card">
+              <p class="ad-label">Sponsrat</p>
+              <div class="adsense-placeholder compact">
+                <p>Google AdSense Mid-page</p>
+                <code>ca-pub-XXXXXXXXXXXX</code>
+                <ins
+                  class="adsbygoogle"
+                  style="display:block"
+                  data-ad-client="ca-pub-XXXXXXXXXXXX"
+                  data-ad-slot="0987654321"
+                  data-ad-format="rectangle"
+                  data-full-width-responsive="true"
+                ></ins>
+              </div>
+            </div>
+          </section>
+
+          <section class="results-card">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Resultat</p>
+                <h3>AI Output</h3>
+              </div>
+              <div class="loading hidden" id="loadingState" aria-live="polite">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+
+            <div class="empty-state" id="emptyState">
+              <h4>Redo att analysera</h4>
+              <p>V&auml;lj ett l&auml;ge och generera studiematerial. Resultatet visas i moderna cards h&auml;r.</p>
+            </div>
+
+            <div class="error-banner hidden" id="errorBanner"></div>
+            <div class="result-meta hidden" id="resultMeta"></div>
+            <div class="results-grid" id="resultsGrid"></div>
+          </section>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>&copy; 2026 StudyTurbo AI. Byggd f&ouml;r snabb, tydlig och modern inl&auml;rning.</p>
+        <div class="footer-links">
+          <a href="{{ url_for('privacy') }}">Privacy Policy</a>
+          <a href="#" id="contactLink">Kontakt</a>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Cookie consent controls ad visibility -->
+    <div class="cookie-banner hidden" id="cookieBanner">
+      <div>
+        <strong>Vi anv&auml;nder cookies f&ouml;r annonser och analys</strong>
+        <p>Godk&auml;nn f&ouml;r att ladda Google AdSense-placeholder och f&ouml;rb&auml;ttra upplevelsen.</p>
+      </div>
+      <div class="cookie-actions">
+        <button class="ghost-button" id="rejectCookiesButton" type="button">Avvisa</button>
+        <button class="primary-button" id="acceptCookiesButton" type="button">Acceptera</button>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
